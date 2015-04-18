@@ -1,16 +1,12 @@
----
-title: "Peer Assessment 1"
-author: "AA"
-date: "Saturday, April 18, 2015"
-output:
-  html_document:
-    keep_md: yes
----
+# Peer Assessment 1
+AA  
+Saturday, April 18, 2015  
 
 # Summary of steps taken per day
 
 
-```{r}
+
+```r
 # Set up the right environment 
     setwd('c:/Users/AA/Documents/Coursera')
     setwd('Data Science/Reproducible Research//Code/PeerAssessment 1/')
@@ -28,35 +24,42 @@ output:
 # Plot the data
 hist(totStep$Total, main = "Histogram of Daily Steps Taken",
      xlab = 'Number of Steps Taken During A Day', breaks = 10)
-
 ```
 
-The mean of daily steps is `r meanOfDays`.  
-The median of daily steps is `r medianOfDays`.
+![](PA1_template_files/figure-html/unnamed-chunk-1-1.png) 
+
+The mean of daily steps is 1.0766189\times 10^{4}.  
+The median of daily steps is 10765.
 
 # Average Daily Activity Pattern
-```{r}
 
+```r
     stepByInterval = ddply(data[complete.cases(data),], ~interval, 
                     summarize, Mean=mean(steps))
     plot(stepByInterval, type='l', 
             xlab = 'Interval Number', ylab='Average steps during the interval')
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
+
+```r
     highestRow = which.max(stepByInterval[,2])
     highestInterval =  stepByInterval[highestRow, 1]
     highestSteps = stepByInterval[highestRow, 2]
-
 ```
 
-The highest average is `r highestSteps` in the interval `r highestInterval`.
+The highest average is 206.1698113 in the interval 835.
 
 # Inputting Missing Values
-```{r}
+
+```r
 missingValues = nrow(data) - nrow(data[complete.cases(data),])
 ```
 
-There are `r missingValues` entries with missing values.
+There are 2304 entries with missing values.
 
-```{r}
+
+```r
 # Clean up the data by replacing NA's with the average for the
 # interval across all days, and storing in cleanData
     cleanData = data
@@ -77,8 +80,9 @@ There are `r missingValues` entries with missing values.
 
     hist(totStep$Total, main = "Histogram of Daily Steps Taken",
          xlab = 'Number of Steps Taken During A Day', breaks = 10)
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
 
 The graphs for the data with missing values, and of the cleaned up data,
 replaced missing values with that interval's averages across days is a little
@@ -87,11 +91,11 @@ is due to the fact that we have replaced all missing values with average,
 so the number of entries at the average (which shows up as peak in the
 graph) is higher, by proportion reducing the others. 
 
-The actual mean is `r meanOfCleaned` and the median is `r medianOfCleaned`.
+The actual mean is 1.0766189\times 10^{4} and the median is 1.0766189\times 10^{4}.
 
 # Weekdays vs. Weekends
-```{r}
 
+```r
 # Add another column - called weekday to cleanData - giving the day of the week
     cleanData['weekday'] = weekdays(as.Date(cleanData$date))
 
@@ -118,6 +122,8 @@ The actual mean is `r meanOfCleaned` and the median is `r medianOfCleaned`.
     plot(weekdaySteps, type='l', main='Steps taken during Weekdays' )
     plot(weekendSteps, type='l', main='Steps taken during Weekends')
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
 It looks like during weekdays people don't walk as much as during weekends in 
 general. While the weekday peak is higher, there are many more local peaks
